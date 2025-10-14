@@ -1,0 +1,12 @@
+[submodule "extern/raylib"]
+	path = extern/raylib
+	url = https://github.com/raysan5/raylib.git
+[submodule "extern/nanobind"]
+	path = extern/nanobind
+	url = https://github.com/wjakob/nanobind
+[submodule "Clipper2"]
+	path = Clipper2
+	url = https://github.com/AngusJohnson/Clipper2
+[submodule "extern/Clipper2"]
+	path = extern/Clipper2
+	url = https://github.com/AngusJohnson/Clipper2
