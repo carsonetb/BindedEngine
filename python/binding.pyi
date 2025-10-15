@@ -12,6 +12,36 @@ class Engine:
     @staticmethod
     def get_singleton() -> Engine: ...
 
+class InputEvent:
+    pressed: bool
+
+class InputEventKey(InputEvent):
+    key: int
+
+class InputAction:
+    name: str
+    pressed: bool
+    released: bool
+    just_pressed: bool
+    just_released: bool
+    events: list[InputEvent]
+
+class Input:
+    action_pressed: Signal[[str]]
+    action_released: Signal[[str]]
+
+    @typing.overload 
+    def register_key_event(self, action_name: str, key: InputEvent) -> None: ...
+    @typing.overload
+    def register_key_event(self, action_name: str, key: int) -> None: ...
+    def get_action(self, action_name: str) -> InputAction: ...
+    def is_action_pressed(self, action_name: str) -> bool: ...
+    def is_action_released(self, action_name: str) -> bool: ...
+    def is_action_just_pressed(self, action_name: str) -> bool: ...
+    def is_action_just_released(self, action_name: str) -> bool: ...
+    @staticmethod
+    def get_singleton() -> Input: ...
+
 class Object:
     name: str
 
