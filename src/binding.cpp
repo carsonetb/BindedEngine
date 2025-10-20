@@ -9,6 +9,7 @@
 #include "signal.hpp"
 #include "callback.hpp"
 #include "shape.hpp"
+#include "input.hpp"
 
 NB_MODULE(binding, m) {
     nanobind::class_<EngineCommunications> engine_communications(m, "EngineCommunications");
@@ -19,6 +20,32 @@ NB_MODULE(binding, m) {
     engine.def("mainloop", &Engine::mainloop);
     engine.def_static("get_singleton", &Engine::get_singleton);
     engine.def_prop_ro("should_close", [](Engine &engine) -> Signal& { return engine.should_close; });
+
+    nanobind::class_<Input> input(m, "Input");
+    input.def("register_key_event", nanobind::overload_cast<std::string, std::shared_ptr<InputEventKey>>(&Input::register_key_event));
+    input.def("register_key_event", nanobind::overload_cast<std::string, int>(&Input::register_key_event));
+    input.def("get_action", &Input::get_action);
+    input.def("is_action_pressed", &Input::is_action_pressed);
+    input.def("is_action_released", &Input::is_action_released);
+    input.def("is_action_just_pressed", &Input::is_action_just_pressed);
+    input.def("is_action_just_released", &Input::is_action_just_released);
+    input.def_static("get_singleton", &Input::get_singleton);
+    input.def_prop_ro("action_pressed", [](Input &input) -> Signal& { return input.action_pressed; });
+    input.def_prop_ro("action_released", [](Input &input) -> Signal& { return input.action_released; });
+
+    nanobind::class_<InputAction> input_action(m, "InputAction");
+    input_action.def_rw("name", &InputAction::name);
+    input_action.def_rw("pressed", &InputAction::pressed);
+    input_action.def_rw("released", &InputAction::released);
+    input_action.def_rw("just_pressed", &InputAction::just_pressed);
+    input_action.def_rw("just_released", &InputAction::just_released);
+    input_action.def_rw("events", &InputAction::events);
+
+    nanobind::class_<InputEvent> input_event(m, "InputEvent");
+    input_event.def_rw("pressed", &InputEvent::pressed);
+
+    nanobind::class_<InputEventKey, InputEvent> input_event_key(m, "InputEventKey");
+    input_event_key.def_rw("key", &InputEventKey::key);
 
     nanobind::class_<Object, PythonObject> object(m, "Object");
     object.def(nanobind::init<>());

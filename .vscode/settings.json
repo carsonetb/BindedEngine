@@ -91,6 +91,7 @@
         "bitset": "cpp",
         "csignal": "cpp",
         "regex": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "hash_map": "cpp"
     }
 }

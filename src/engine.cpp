@@ -1,6 +1,7 @@
 #include "engine.hpp"
 
 #include "shape.hpp"
+#include "input.hpp"
 
 #include <iostream>
 #include <raylib.h>
@@ -26,22 +27,16 @@ EngineCommunications Engine::mainloop() {
         }
     }
 
+    Input::get_singleton()->update();
+
     BeginDrawing();
         ClearBackground(RAYWHITE);
 
         for (std::shared_ptr<Object> object : objects) {
             if (object->parent) { // Only want objects without a parent, aka they are at the top.
-                std::shared_ptr<Shape> as_shape = std::dynamic_pointer_cast<Shape>(object);
-                if (as_shape) {
-                    DrawCircleV(as_shape->global_transform.position, 10, BLACK);
-                }
                 continue;
             }
             object->update();
-            std::shared_ptr<Shape> as_shape = std::dynamic_pointer_cast<Shape>(object);
-            if (as_shape) {
-                DrawCircleV(as_shape->global_transform.position, 10, BLACK);
-            }
         }
     EndDrawing();
 

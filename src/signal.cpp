@@ -14,3 +14,9 @@ void Signal::emit(nanobind::args args) {
         function(*args);
     }
 }
+
+void Signal::emit_internal(nanobind::tuple args) {
+    for (nanobind::callable &function : callbacks) {
+        function(*args);
+    }
+}

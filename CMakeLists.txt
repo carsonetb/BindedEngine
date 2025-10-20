@@ -21,6 +21,7 @@ nanobind_add_module(
   src/object.cpp 
   src/callback.hpp
   src/shape.cpp
+  src/input.cpp
 )
 
 set_target_properties(binding PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/python")
